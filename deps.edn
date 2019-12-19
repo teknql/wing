@@ -1,0 +1,10 @@
+{:paths ["src"]
+ :deps
+ {org.clojure/tools.deps.alpha
+  {:git/url "https://github.com/clojure/tools.deps.alpha.git"
+   :sha     "148cab8f154711f8495bd632ebdc53a14dff7f09"}
+  metosin/malli  {:git/url "https://github.com/metosin/malli.git"
+                  :sha     "07c8c61c5f469769291bd6cf5c938a3a0e94d41d"}
+  integrant      {:mvn/version "0.8.0-alpha2"}
+  integrant/repl {:mvn/version "0.3.1"}
+  duct/core      {:mvn/version "0.7.0"}}}
