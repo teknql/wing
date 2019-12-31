@@ -8,9 +8,14 @@
   "Loads the integrant config for integrant"
   []
   (duct/load-hierarchy)
-  (-> (io/resource "config.edn")
-      (duct/read-config)
-      (doto ig/load-namespaces)))
+  (let [base-config   (some-> (io/resource "config.edn") duct/read-config)
+        secret-config (some-> (io/resource "secrets.edn") duct/read-config)
+        map-merge     (fn map-merge [a b]
+                        (if (and (map? a) (map? b))
+                          (merge-with map-merge a b)
+                          b))]
+    (-> (merge-with map-merge base-config secret-config)
+        (doto ig/load-namespaces))))
 
 ;; Once pluggable spec lands
 #_(defmethod ig/assert-pre-init-spec :default [system key value]
