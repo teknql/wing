@@ -1,6 +1,7 @@
 (ns wing.test
   "Namespace providing testing facilities"
   (:require [clojure.core.match :refer [match]]
+            [slingshot.slingshot :refer [try+]]
             [clojure.test :refer [do-report]]))
 
 
