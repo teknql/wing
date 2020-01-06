@@ -1,6 +1,7 @@
 {:paths ["src"]
  :pablo/config
  {:group-id wing
+  :github "teknql/wing"
   :projects
   {core {:desc   "Extensions to the clojure standard library"
          :target :jar
