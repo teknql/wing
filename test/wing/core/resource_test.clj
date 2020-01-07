@@ -24,7 +24,7 @@
             5)]
       (is (= 5 result))))
 
-  (testing "calls release even if there is an error, and propigates it"
+  (testing "calls release even if there is an error, and propagates it"
     (let [release-called (atom false)]
       (is (thrown?
             Exception
