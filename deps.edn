@@ -15,7 +15,8 @@
               :deps   [integrant duct/core]}
    repl      {:desc       "Repl functionality for Wing"
               :target     :jar
-              :deps       [integrant/repl]
+              :deps       [integrant/repl
+                           org.clojure/tools.deps.alpha]
               :local-deps [integrant]}
    test      {:desc   "Testing utilities for Wing"
               :target :jar

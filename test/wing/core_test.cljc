@@ -131,7 +131,10 @@
 
 (deftest avg-test
   (testing "returns the average of the numbers"
-    (is 2 (sut/avg 1 2 3))))
+    (is 2 (sut/avg 1 2 3)))
+
+  (testing "returns nil when called with empty args"
+    (is (nil? (sut/avg)))))
 
 
 (deftest round-test

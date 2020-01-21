@@ -80,9 +80,10 @@
   (reduce + 0 (keep identity args)))
 
 (defn avg
-  "Varidic function which will average `args`"
+  "Varidic function which will average `args`. Returns nil on empty collections"
   [& args]
-  (/ (apply sum args) (count args)))
+  (when (seq args)
+    (/ (apply sum args) (count args))))
 
 (defn round
   "Rounds `n` to the given `precision`"
