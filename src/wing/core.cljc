@@ -75,15 +75,22 @@
       [(persistent! vals) (persistent! new-map)])))
 
 (defn sum
-  "Varidic function which will sum `args`. Treats nil as 0."
+  "Variadic function which will sum `args`. Treats nil as 0."
   [& args]
   (reduce + 0 (keep identity args)))
 
 (defn avg
-  "Varidic function which will average `args`. Returns nil on empty collections"
+  "Variadic function which will average `args`. Returns nil on empty collections"
   [& args]
   (when (seq args)
     (/ (apply sum args) (count args))))
+
+(defn standard-deviation
+  "Varidic function wheich will return the standard deviation of the provided `args`. Returns `nil`
+  on empty collections"
+  [& args]
+  (when-some [mean (apply avg args)]
+    (Math/sqrt (apply avg (map #(Math/pow (- % mean) 2) args)))))
 
 (defn round
   "Rounds `n` to the given `precision`"

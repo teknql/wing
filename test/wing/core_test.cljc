@@ -136,6 +136,16 @@
   (testing "returns nil when called with empty args"
     (is (nil? (sut/avg)))))
 
+(deftest standard-deviation-test
+  (testing "returns nil for empty sequences"
+    (is (nil? (sut/standard-deviation))))
+
+  (testing "returns 0 for all the same value"
+    (is (= 0.0 (apply sut/standard-deviation (repeat 10 5)))))
+
+  (testing "returns the currect result"
+    (is (= 3.94 (sut/round (sut/standard-deviation  4 9 11 12 17 5 8 12 14) 2)))))
+
 
 (deftest round-test
   (testing "obeys precision"
