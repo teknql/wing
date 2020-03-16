@@ -8,7 +8,8 @@
 (defn generate-encode-key-rename-map
   "Function to generate a map of key renames for a provided
   schema with the given options."
-  [schema _opts]
+  [schema {encode-map-key :json/encode-map-key
+           :or            {encode-map-key str/snake}}]
   (let [allowed-keys (map first (m/-map-entries schema))
         props        (m/-properties schema)
         root-ns      (or (:json/root-namespace props)
@@ -22,8 +23,8 @@
                                [k (let [ns   (namespace k)
                                         name (name k)]
                                     (if (= root-ns ns)
-                                      (keyword name)
-                                      (keyword (str (str/kebab ns) "-" name))))]))
+                                      (encode-map-key name)
+                                      (encode-map-key (str ns " " name))))]))
                            allowed-keys)]
     rename-map))
 
@@ -52,7 +53,11 @@
            (set/rename-keys rename-map)))}))
 
 (defn transformer
-  "JSON transformer which will auotmatically encode / decode namespaced keywords into flatter JSON"
+  "JSON transformer which will auotmatically encode / decode namespaced keywords into flatter JSON
+
+  Responds to the malli transformer option of: `:json/encode-map-key` for building encoders
+  and decoders. Mostly useful to pair with `cuerdas.core` string functions. By default will
+  use snake case."
   []
   (mt/transformer
     {:name :json
