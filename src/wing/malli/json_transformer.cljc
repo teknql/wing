@@ -24,7 +24,9 @@
                                         name (name k)]
                                     (if (= root-ns ns)
                                       (encode-map-key name)
-                                      (encode-map-key (str ns " " name))))]))
+                                      (encode-map-key
+                                        (str/replace
+                                          (str ns "." name) (re-pattern (str "^" root-ns "\\.")) ""))))]))
                            allowed-keys)]
     rename-map))
 

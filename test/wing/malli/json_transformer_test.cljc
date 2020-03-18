@@ -11,6 +11,7 @@
   [:map
    [:person/name string?]
    [:person/age pos-int?]
+   [:person.personality/charisma pos-int?]
    [:pet/name string?]])
 
 (deftest encoder+decoder-test
@@ -22,12 +23,14 @@
              (-> data person->json json->person))))
 
     (testing "decoding maps"
-      (is (= {:person/name "Bob"
-              :person/age  35
-              :pet/name    "Rupert"}
-             (json->person {"name"     "Bob"
-                            "age"      35
-                            "pet_name" "Rupert"}))))
+      (is (= {:person/name                 "Bob"
+              :person/age                  35
+              :person.personality/charisma 50
+              :pet/name                    "Rupert"}
+             (json->person {"name"                 "Bob"
+                            "age"                  35
+                            "personality_charisma" 50
+                            "pet_name"             "Rupert"}))))
 
     (testing "custom string functions"
       (let [opts         {:json/encode-map-key str/camel}
