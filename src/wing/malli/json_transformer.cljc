@@ -68,4 +68,5 @@
       :sequential {:leave vec}}
      :decoders
      {:map        {:compile decode-namespaced-keys}
+      'keyword?   {:enter #(apply keyword (str/split % "/"))}
       :sequential {:leave vec}}}))
