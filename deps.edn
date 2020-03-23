@@ -53,7 +53,7 @@
   clojure.java-time {:mvn/version "0.3.2"}
   slingshot         {:mvn/version "0.12.2"}
   metosin/malli     {:git/url "https://github.com/metosin/malli.git"
-                     :sha     "0cf10b4aee2f6d6a4bb273d9898ff3e2f93b9ec4"}
+                     :sha     "47b66c3420b50fb7e56c9e187ae402b76b38f4e5"}
   integrant         {:mvn/version "0.8.0-alpha2"}
   integrant/repl    {:mvn/version "0.3.1"}
   duct/core         {:mvn/version "0.7.0"}}}
