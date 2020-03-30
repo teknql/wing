@@ -1,4 +1,4 @@
-(ns wing.malli.json-transformer
+(ns wing.malli.json
   "Custom JSON transformer which auto-encodes namespaced map keys"
   (:require [malli.core :as m]
             [cuerdas.core :as str]

@@ -1,5 +1,5 @@
-(ns wing.malli.json-transformer-test
-  (:require [wing.malli.json-transformer :as sut]
+(ns wing.malli.json-test
+  (:require [wing.malli.json :as sut]
             #?(:clj [clojure.test :as t :refer [deftest testing is]]
                :cljs [cljs.test :as t :include-macros true])
             [malli.core :as m]

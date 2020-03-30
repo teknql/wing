@@ -1,7 +1,7 @@
 (ns wing.malli
   "Common schema and tools for malli"
   (:require [cuerdas.core :as str]
-            [wing.malli.json-transformer :as wm.json]))
+            [wing.malli.json :as wm.json]))
 
 (defn enum-keyword
   "Creates an `:enum` schema which enforces that all of the keywords must be of the same
