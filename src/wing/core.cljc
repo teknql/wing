@@ -179,7 +179,11 @@
 
 (defn dedupe-by
   "Returns a lazy sequence of the elements of coll, removing any **consecutive**
-  elements that return duplicate values when passed to a function f."
+  elements that return duplicate values when passed to a function f.
+
+  Returns a stateful transducer when no collection is provided.
+
+  See also `distinct-by`"
   ([f]
    (fn [rf]
      (let [pv (volatile! ::none)]
@@ -196,6 +200,26 @@
   ([f coll]
    (sequence (dedupe-by f) coll)))
 
+(defn distinct-by
+  "Returns a lazy sequence of the elements of coll with elements that return non-distinct
+  values from `f` removed.
+
+  Returns a stateful transducer when no collection is provided.
+
+  See also `dedupe-by`."
+  ([f]
+   (fn [rf]
+     (let [seen (transient #{})]
+       (fn
+         ([] (rf))
+         ([acc] (rf acc))
+         ([acc x]
+          (let [sig (f x)]
+            (when-not (contains? seen sig)
+              (conj! seen sig)
+              (rf acc x))))))))
+  ([f coll]
+   (sequence (distinct-by f) coll)))
 
 (defmacro assert-args
   "assert-args lifted from clojure.core. Mostly useful for writing other macros"

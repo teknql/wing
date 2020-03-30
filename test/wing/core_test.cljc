@@ -214,10 +214,24 @@
     (let [coll [{:name "Bob" :age 31}
                 {:name "Ed" :age 31}
                 {:name "Stacy" :age 35}
-                {:name "Nemo" :age 42}]]
-      (is (= ["Bob" "Stacy" "Nemo"]
+                {:name "Nemo" :age 42}
+                {:name "Stacy" :age 35}]]
+      (is (= ["Bob" "Stacy" "Nemo" "Stacy"]
              (->> coll
                   (sut/dedupe-by :age)
+                  (map :name)
+                  (into [])))))))
+
+(deftest distinct-by-test
+  (testing "removes non-unique elements"
+    (let [coll [{:name "Bob" :age 31}
+                {:name "Ed" :age 31}
+                {:name "Stacy" :age 35}
+                {:name "Nemo" :age 42}
+                {:name "Stacy" :age 35}]]
+      (is (= ["Bob" "Stacy" "Nemo"]
+             (->> coll
+                  (sut/distinct-by :age)
                   (map :name)
                   (into [])))))))
 
