@@ -10,24 +10,30 @@
   schema with the given options."
   [schema {encode-map-key :json/encode-map-key
            :or            {encode-map-key str/snake}}]
-  (let [allowed-keys (map first (m/-map-entries schema))
-        props        (m/-properties schema)
-        root-ns      (or (:json/root-namespace props)
-                         (->> (frequencies (map namespace allowed-keys))
-                              (sort-by val)
-                              (last)
-                              key))
-        rename-map   (into {}
-                           (map
-                             (fn [k]
-                               [k (let [ns   (namespace k)
-                                        name (name k)]
-                                    (if (= root-ns ns)
-                                      (encode-map-key name)
-                                      (encode-map-key
-                                        (str/replace
-                                          (str ns "." name) (re-pattern (str "^" root-ns "\\.")) ""))))]))
-                           allowed-keys)]
+  (let [map-entries      (m/-map-entries schema)
+        allowed-keys     (map first map-entries)
+        explicit-renames (->> map-entries
+                              (keep #(when-some [explicit (-> % second :json/key)]
+                                       [(first %) explicit]))
+                              (into {}))
+        props            (m/-properties schema)
+        root-ns          (or (:json/root-namespace props)
+                             (->> (frequencies (map namespace allowed-keys))
+                                  (sort-by val)
+                                  (last)
+                                  key))
+        rename-map       (into {}
+                               (map
+                                 (fn [k]
+                                   [k (or (get explicit-renames k)
+                                          (let [ns   (namespace k)
+                                                name (name k)]
+                                            (if (= root-ns ns)
+                                              (encode-map-key name)
+                                              (encode-map-key
+                                                (str/replace
+                                                  (str ns "." name) (re-pattern (str "^" root-ns "\\.")) "")))))]))
+                               allowed-keys)]
     rename-map))
 
 

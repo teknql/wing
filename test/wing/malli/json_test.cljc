@@ -11,6 +11,7 @@
   [:map
    [:person/name string?]
    [:person/age pos-int?]
+   [:person/nickname {:json/key "alias"} string?]
    [:person.personality/charisma pos-int?]
    [:pet/name string?]])
 
@@ -25,9 +26,11 @@
     (testing "decoding maps"
       (is (= {:person/name                 "Bob"
               :person/age                  35
+              :person/nickname             "Robert"
               :person.personality/charisma 50
               :pet/name                    "Rupert"}
              (json->person {"name"                 "Bob"
+                            "alias"                "Robert"
                             "age"                  35
                             "personality_charisma" 50
                             "pet_name"             "Rupert"}))))
