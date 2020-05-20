@@ -18,3 +18,31 @@
     (-> time
         (t/- (t/new-duration diff :millis))
         (t/truncate :millis))))
+
+
+(defn ensure-chronological
+  "Return a stateful transducer which will ensure that items that items are emitted in
+  chronological order. Items that happen after the latest will be filtered.
+
+  Optionally takes a `f` that will be used to access the time field. Usually a keyword if specified.
+
+  If called with a collection, will return a sequence of the transducer applied to the collection."
+  {:arglists '([]
+               [f]
+               [coll]
+               [f coll])}
+  ([] (ensure-chronological identity))
+  ([f-or-coll]
+   (if (coll? f-or-coll)
+     (sequence (ensure-chronological) f-or-coll)
+     (fn [xf]
+       (let [f      f-or-coll
+             latest (volatile! nil)]
+         (completing
+           (fn [result item]
+             (let [t   (f item)
+                   max (vswap! latest t/max t)]
+               (when (= max t)
+                 (xf result item)))))))))
+  ([f coll]
+   (sequence (ensure-chronological f) coll)))

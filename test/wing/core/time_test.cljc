@@ -16,3 +16,16 @@
     (is (= (t/at (t/new-date 2018 1 1) (t/new-time 1 5))
            (sut/round-to (t/at (t/new-date 2018 1 1) (t/new-time 1 7))
                          (t/new-duration 5 :minutes))))))
+
+(deftest ensure-chronological-test
+  (let [times (take 3 (iterate #(t/>> % (t/new-duration 1 :minutes)) (t/now)))]
+    (testing "filters non-chronological items"
+      (is (= times
+             (sut/ensure-chronological times)))
+      (is (= (list (last times))
+             (sut/ensure-chronological (reverse times)))))
+
+    (testing "using an accessor"
+      (let [people (map #(array-map :name "Bob" :birth-day %) times)]
+        (is (= times
+               (map :birth-day (sut/ensure-chronological :birth-day people))))))))
