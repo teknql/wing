@@ -442,3 +442,15 @@
                 3
                 5)
              (sut/unfold f 1))))))
+
+(deftest arity-test
+  (let [f (fn [& args]
+            args)]
+    (testing "only calls f with the appropriate number of args"
+      (is (= [1]
+             ((sut/arity 1 f) 1 2 3)))
+      (is (= [1 2]
+             ((sut/arity 2 f) 1 2 3))))
+    (testing "static arg application"
+      (is (= [1 2 4]
+             ((sut/arity 2 f 4) 1 2 3))))))

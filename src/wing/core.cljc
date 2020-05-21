@@ -390,3 +390,17 @@
       (if val
         (cons val (unfold f new-state))
         (unfold f new-state)))))
+
+(defn arity
+  "Return a variant of `f` that will only accept `n` arguments.
+
+  Useful for coercing polyvariadic functions into fixed arity ones.
+
+  Optionally takes `&args` which will be applied after the first `n`
+  arguments."
+  {:arglists '([n f & static-args])}
+  [n f & static-args]
+  (fn [& call-args]
+    (let [args (concat (take n call-args)
+                       static-args)]
+      (apply f args))))
