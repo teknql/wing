@@ -221,6 +221,33 @@
   ([f coll]
    (sequence (distinct-by f) coll)))
 
+(defn ensure-ascending
+  "Returns a stateful transducer that will ensure that only items that are ascending
+  (using `compare`) will be emitted.
+
+  Optionally takes an `f` which will be used to access the value.
+
+  If called with a `coll` returns a lazy sequence."
+  {:arglists '([]
+               [f]
+               [coll]
+               [f coll])}
+  ([] (ensure-ascending identity))
+  ([f-or-coll]
+   (if (coll? f-or-coll)
+     (sequence (ensure-ascending identity) f-or-coll)
+     (fn [xf]
+       (let [last (volatile! nil)
+             f    f-or-coll]
+         (completing
+           (fn [result item]
+             (let [val (f item)]
+               (when (neg? (compare @last val))
+                 (vreset! last val)
+                 (xf result item)))))))))
+  ([f coll]
+   (sequence (ensure-ascending f) coll)))
+
 (defmacro assert-args
   "assert-args lifted from clojure.core. Mostly useful for writing other macros"
   [& pairs]

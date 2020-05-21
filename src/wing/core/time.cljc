@@ -1,6 +1,7 @@
 (ns wing.core.time
   "Utilities for working with time"
-  (:require [tick.alpha.api :as t]))
+  (:require [tick.alpha.api :as t]
+            [wing.core :as w]))
 
 (defn divisible?
   "Returns whether duration `a` is evenly divisible by `b`. "
@@ -31,18 +32,5 @@
                [f]
                [coll]
                [f coll])}
-  ([] (ensure-chronological identity))
-  ([f-or-coll]
-   (if (coll? f-or-coll)
-     (sequence (ensure-chronological) f-or-coll)
-     (fn [xf]
-       (let [f      f-or-coll
-             latest (volatile! nil)]
-         (completing
-           (fn [result item]
-             (let [t   (f item)
-                   max (vswap! latest t/max t)]
-               (when (= max t)
-                 (xf result item)))))))))
-  ([f coll]
-   (sequence (ensure-chronological f) coll)))
+  [& args]
+  (apply w/ensure-ascending args))

@@ -235,6 +235,10 @@
                   (map :name)
                   (into [])))))))
 
+(deftest ensure-ascending-test
+  (is (= [1 2 3 4 5]
+         (sut/ensure-ascending [1 1 0 2 1 3 4 3 2 1 5]))))
+
 (deftest map-keys-test
   (testing "maps f over all keys"
     (is (= {1 :a
