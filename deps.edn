@@ -50,8 +50,7 @@
   org.clojure/core.match {:mvn/version "0.3.0"}
 
   funcool/cuerdas {:mvn/version "2.2.0"}
-  juxt/tick       {:git/url "https://github.com/juxt/tick.git"
-                   :sha     "72b19095fa559112f5b2a4e61d4cddcb9895a5af"}
+  tick            {:mvn/version "0.4.23-alpha"}
   slingshot       {:mvn/version "0.12.2"}
   metosin/malli   {:git/url "https://github.com/metosin/malli.git"
                    :sha     "47b66c3420b50fb7e56c9e187ae402b76b38f4e5"}
