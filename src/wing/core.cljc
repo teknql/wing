@@ -242,9 +242,10 @@
          (completing
            (fn [result item]
              (let [val (f item)]
-               (when (neg? (compare @last val))
-                 (vreset! last val)
-                 (xf result item)))))))))
+               (if (neg? (compare @last val))
+                 (do (vreset! last val)
+                     (xf result item))
+                 result))))))))
   ([f coll]
    (sequence (ensure-ascending f) coll)))
 
