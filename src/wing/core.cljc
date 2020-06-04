@@ -432,3 +432,23 @@
     (let [args (concat (take n call-args)
                        static-args)]
       (apply f args))))
+
+(defmacro make-map
+  "Packs a sequence of variables into a map with keywords bound to the same name
+  as the variables"
+  [& args]
+  (let [data (loop [[a & [b & b-rest :as a-rest] :as args] args
+                    data                                   []]
+               (cond
+                 (empty? args) data
+                 (symbol? a)   (recur
+                                 a-rest
+                                 (-> data
+                                     (conj (keyword a))
+                                     (conj a)))
+                 :else         (recur
+                                 b-rest
+                                 (-> data
+                                     (conj a)
+                                     (conj b)))))]
+    `(array-map ~@data)))

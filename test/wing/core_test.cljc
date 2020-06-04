@@ -458,3 +458,16 @@
     (testing "static arg application"
       (is (= [1 2 4]
              ((sut/arity 2 f 4) 1 2 3))))))
+
+(deftest make-map-test
+  (let [a 1
+        b 2]
+    (testing "just syms"
+      (is (= {:a 1 :b 2}
+             (sut/make-map a b))))
+    (testing "and keywords"
+      (is (= {:a 1 :b 2 :c 3}
+             (sut/make-map a :b b :c 3))))
+    (testing "and strings"
+      (is (= {"a" 1 :b 2}
+             (sut/make-map "a" a b))))))
