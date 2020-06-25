@@ -23,19 +23,8 @@
         error      (str "Must be one of: ["
                         (str/join "," val-labels)
                         "]")]
-    (reduce conj [:enum {:error/message error
-                         :encode/json   {:enter
-                                         (fn [x]
-                                           (if (keyword? x)
-                                             (name x)
-                                             x))}
-                         :decode/json   {:enter
-                                         (fn [x]
-                                           (cond
-                                             (string? x)  (keyword val-ns x)
-                                             (keyword? x) (keyword val-ns (name x))
-                                             :else        x))}}]
-            vals)))
+    (reduce conj [:enum {:error/message  error
+                         :enum/namespace val-ns}] vals)))
 
 (defn json-transformer
   "JSON transformer which will auotmatically encode / decode namespaced keywords into flatter JSON"

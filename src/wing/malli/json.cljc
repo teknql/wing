@@ -60,19 +60,44 @@
            (select-keys allowed-keys)
            (set/rename-keys rename-map)))}))
 
+(defn encode-enum-keywords
+  "Return an interceptor that will encode enum namespaced keywords"
+  [schema opts]
+  (when (-> schema m/-properties :enum/namespace)
+    (let [encode (:json/encode-enum opts str/snake)]
+      {:enter
+       (fn [x]
+         (if (keyword? x)
+           (encode (name x))
+           x))})))
+
+(defn decode-enum-keywords
+  "Return an interceptor that will encode enum namespaced keywords"
+  [schema _opts]
+  (when-some [val-ns (-> schema m/-properties :enum/namespace)]
+    {:leave
+     (fn [x]
+       (cond
+         (string? x)  (keyword val-ns (str/kebab x))
+         (keyword? x) (keyword val-ns (str/kebab (name x)))
+         :else        x))}))
+
 (defn transformer
   "JSON transformer which will auotmatically encode / decode namespaced keywords into flatter JSON
 
   Responds to the malli transformer option of: `:json/encode-map-key` for building encoders
-  and decoders. Mostly useful to pair with `cuerdas.core` string functions. By default will
-  use snake case."
+  and decoders, as well as `:json/encode-enum` for enum keywords.
+
+  Mostly useful to pair with `cuerdas.core` string functions. By default will use snake case."
   []
   (mt/transformer
     {:name :json
      :encoders
      {:map        {:compile encode-namespaced-keys}
-      :sequential {:leave vec}}
+      :sequential {:leave vec}
+      :enum       {:compile encode-enum-keywords}}
      :decoders
      {:map        {:compile decode-namespaced-keys}
       'keyword?   {:enter #(apply keyword (str/split % "/"))}
-      :sequential {:leave vec}}}))
+      :sequential {:leave vec}
+      :enum       {:compile decode-enum-keywords}}}))
