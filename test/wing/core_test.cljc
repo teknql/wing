@@ -471,3 +471,6 @@
     (testing "and strings"
       (is (= {"a" 1 :b 2}
              (sut/make-map "a" a b))))))
+
+(deftest random-uuid-test
+  (is (uuid? (sut/random-uuid))))
