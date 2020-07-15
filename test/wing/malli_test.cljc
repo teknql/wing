@@ -26,9 +26,9 @@
                    :pet/name    "Samson"}
           encoded (m/encode schema val (sut/json-transformer))
           decoded (m/decode schema encoded (sut/json-transformer))]
-      (is (= {:name     "Edward"
-              :age      42
-              :pet-name "Samson"}
+      (is (= {"name"     "Edward"
+              "age"      42
+              "pet_name" "Samson"}
              encoded))
       (is (= val decoded))))
 
@@ -42,8 +42,8 @@
                    :pet/name    "Samson"}
           encoded (m/encode schema val (sut/json-transformer))
           decoded (m/decode schema encoded (sut/json-transformer))]
-      (is (= {:person-name "Edward"
-              :person-age  42
-              :name        "Samson"}
+      (is (= {"person_name" "Edward"
+              "person_age"  42
+              "name"        "Samson"}
              encoded))
       (is (= val decoded)))))
