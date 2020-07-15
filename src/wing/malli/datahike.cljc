@@ -6,12 +6,12 @@
 (defn- collection-like?
   "Returns whether the schema is collection-like"
   [schema]
-  (#{:sequential :vector :list :set} (m/name schema)))
+  (#{:sequential :vector :list :set} (m/type schema)))
 
 (defn- map-like?
   "Returns whether the schema is map-like"
   [schema]
-  (#{:map} (m/name schema)))
+  (#{:map} (m/type schema)))
 
 (defn- ns-select-keys
   "Selects all keys from the provided `map` that match the given `ns-str`"
@@ -36,7 +36,7 @@
         'number?         :db.type/float
         'float?          :db.type/float
         'double?         :db.type/double
-        :map             :db.type/ref} (m/name schema))))
+        :map             :db.type/ref} (m/type schema))))
 
 (defn ->root-value-type
   "Traverses collection-like schema types to return their underlying
