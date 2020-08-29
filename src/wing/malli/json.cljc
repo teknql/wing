@@ -99,5 +99,6 @@
      :decoders
      {:map        {:compile decode-namespaced-keys}
       'keyword?   {:enter #(apply keyword (str/split % "/"))}
-      :sequential {:leave vec}
+      :sequential {:leave seq}
+      :set        {:leave set}
       :enum       {:compile decode-enum-keywords}}}))
