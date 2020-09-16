@@ -62,6 +62,16 @@
       (is (= (inc x)
              (sut/apply-when x (constantly true) inc)))))
 
+(defspec guard-returns-nil-if-pred-is-false
+  5
+  (prop/for-all [x gen/any-equatable]
+      (is (nil? (sut/guard (constantly false) x)))))
+
+(defspec guard-is-identity-if-pred-is-true
+  5
+  (prop/for-all [x gen/any-equatable]
+      (is (= x (sut/guard (constantly true) x)))))
+
 (deftest update-if-exists-test
   (testing "updates existing keys"
     (is (= {:a 2 :b 1}

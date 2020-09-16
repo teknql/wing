@@ -42,6 +42,15 @@
   (when (pred x)
     (f x)))
 
+(defn guard
+  "Return `nil` unless `(pred x)`, then return `x`.
+
+  The unary form returns a partially applied `guard`.
+
+  Useful for `condp`."
+  ([pred] (partial guard pred))
+  ([pred x] (when (pred x) x)))
+
 (defn update-if-exists
   "Like `clojure.core/update`, but only calls `f` if the `k` exists
   in the `m`."
