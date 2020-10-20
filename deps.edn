@@ -9,10 +9,12 @@
                    tick/tick]}
    malli {:desc   "Malli related functionality for Wing"
           :target :jar
-          :deps   [metosin/malli]}
+          :deps   [metosin/malli
+                   funcool/cuerdas]}
    repl  {:desc   "Repl functionality for Wing"
           :target :jar
-          :deps   [org.clojure/tools.deps.alpha]}
+          :deps   [org.clojure/tools.deps.alpha
+                   clj-commons/pomegranate]}
    test  {:desc   "Testing utilities for Wing"
           :target :jar
           :deps   [slingshot/slingshot
