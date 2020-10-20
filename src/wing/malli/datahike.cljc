@@ -50,7 +50,7 @@
   "Function to convert a malli schema into a datahike schema"
   ([schema] (->datahike-schema schema nil))
   ([schema opts]
-   (->> (m/map-entries schema opts)
+   (->> (m/children schema opts)
         (map
           (fn [[child-k map-child-props child-schema]]
             (let [all-child-props (merge (m/properties child-schema)
