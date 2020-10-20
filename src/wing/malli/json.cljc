@@ -10,13 +10,13 @@
   schema with the given options."
   [schema {encode-map-key :json/encode-map-key
            :or            {encode-map-key str/snake}}]
-  (let [map-entries      (m/-map-entries schema)
+  (let [map-entries      (m/children schema)
         allowed-keys     (map first map-entries)
         explicit-renames (->> map-entries
                               (keep #(when-some [explicit (-> % second :json/key)]
                                        [(first %) explicit]))
                               (into {}))
-        props            (m/-properties schema)
+        props            (m/properties schema)
         root-ns          (or (:json/root-namespace props)
                              (->> (frequencies (map namespace allowed-keys))
                                   (sort-by val)
@@ -63,7 +63,7 @@
 (defn encode-enum-keywords
   "Return an interceptor that will encode enum namespaced keywords"
   [schema opts]
-  (when (-> schema m/-properties :enum/namespace)
+  (when (-> schema m/properties :enum/namespace)
     (let [encode (:json/encode-enum opts str/snake)]
       {:enter
        (fn [x]
@@ -74,7 +74,7 @@
 (defn decode-enum-keywords
   "Return an interceptor that will encode enum namespaced keywords"
   [schema _opts]
-  (when-some [val-ns (-> schema m/-properties :enum/namespace)]
+  (when-some [val-ns (-> schema m/properties :enum/namespace)]
     {:leave
      (fn [x]
        (cond

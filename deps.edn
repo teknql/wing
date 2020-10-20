@@ -51,7 +51,7 @@
   funcool/cuerdas {:mvn/version "2.2.0"}
   tick            {:mvn/version "0.4.23-alpha"}
   slingshot       {:mvn/version "0.12.2"}
-  metosin/malli   {:mvn/version "0.0.1-SNAPSHOT"}
+  metosin/malli   {:mvn/version "0.2.0"}
   integrant       {:mvn/version "0.8.0-alpha2"}
   integrant/repl  {:mvn/version "0.3.1"}
   duct/core       {:mvn/version "0.7.0"}}}
