@@ -1,0 +1,6 @@
+{:cljdoc/include-namespaces-from-dependencies
+ [wing/wing
+  wing/core
+  wing/malli
+  wing/repl
+  wing/test]}
