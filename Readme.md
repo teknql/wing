@@ -37,7 +37,7 @@ We recommend using Juxt's outstanding [tick](https://github.com/juxt/tick).
 As mentioned above, `wing/wing` will give you all of these, but if you want to use parts, here they
 are.
 
-### wing/wing-core
+### wing/core
 
 [![Clojars Project](https://img.shields.io/clojars/v/wing/core.svg)](https://clojars.org/wing/core)
 
