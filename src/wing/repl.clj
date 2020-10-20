@@ -1,11 +1,7 @@
 (ns wing.repl
   "REPL namespace for Wing"
   (:require [clojure.tools.deps.alpha :as tools.deps]
-            [cemerick.pomegranate :as pome]
-            [wing.integrant :as wing.ig]
-            [integrant.core :as ig]
-            [integrant.repl :as ig.repl]
-            [integrant.repl.state]))
+            [cemerick.pomegranate :as pome]))
 
 (defn- deps->class-paths!
   "Convert a map of deps into a sequence of class paths.
@@ -41,38 +37,3 @@
   [lib-sym lib-spec]
   (->> (deps->class-paths! {lib-sym lib-spec})
        (run! pome/add-classpath)))
-
-
-(defn find-config
-  "Returns a running integrant config with the provided key.
-  If multiple components can be found, returns a list of them"
-  [k]
-  (if-not integrant.repl.state/config
-    :not-running
-    (let [items (ig/find-derived integrant.repl.state/config k)]
-      (case (count items)
-        0     :not-found
-        1     (-> items first second)
-        :else items))))
-
-(defn find-running
-  "Returns a running integrant component with the provided key.
-  If multiple components can be found, returns a list of them"
-  [k]
-  (if-not integrant.repl.state/system
-    :not-running
-    (let [items (ig/find-derived integrant.repl.state/system k)]
-      (case (count items)
-        0     :not-found
-        1     (-> items first second)
-        :else items))))
-
-(defn bootstrap-integrant!
-  "Bootstraps integrant by calling `integrant.repl/set-prep!`"
-  []
-  (ig.repl/set-prep! wing.ig/load-config))
-
-(defn bootstrap!
-  "Bootstraps Wingman. Likely called from your user.clj"
-  []
-  (bootstrap-integrant!))

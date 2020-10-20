@@ -3,27 +3,22 @@
  {:group-id wing
   :github   "teknql/wing"
   :projects
-  {core      {:desc   "Extensions to the clojure standard library"
-              :target :jar
-              :deps   [clojure.java-time
-                       org.clojure/core.match]}
-   malli     {:desc   "Malli related functionality for Wing"
-              :target :jar
-              :deps   [metosin/malli]}
-   integrant {:desc   "Integrant functionality for Wing"
-              :target :jar
-              :deps   [integrant duct/core]}
-   repl      {:desc       "Repl functionality for Wing"
-              :target     :jar
-              :deps       [integrant/repl
-                           org.clojure/tools.deps.alpha]
-              :local-deps [integrant]}
-   test      {:desc   "Testing utilities for Wing"
-              :target :jar
-              :deps   [slingshot org.clojure/core.match]}
-   wing      {:desc       "Batteries included framework for building applications"
-              :target     :jar
-              :local-deps [test repl integrant malli core]}}}
+  {core  {:desc   "Extensions to the clojure standard library"
+          :target :jar
+          :deps   [clojure.java-time
+                   org.clojure/core.match]}
+   malli {:desc   "Malli related functionality for Wing"
+          :target :jar
+          :deps   [metosin/malli]}
+   repl  {:desc   "Repl functionality for Wing"
+          :target :jar
+          :deps   [org.clojure/tools.deps.alpha]}
+   test  {:desc   "Testing utilities for Wing"
+          :target :jar
+          :deps   [slingshot org.clojure/core.match]}
+   wing  {:desc       "Batteries included framework for building applications"
+          :target     :jar
+          :local-deps [test repl  malli core]}}}
  :aliases
  {:dev
   {:extra-paths ["test"]
@@ -51,7 +46,4 @@
   funcool/cuerdas {:mvn/version "2.2.0"}
   tick            {:mvn/version "0.4.23-alpha"}
   slingshot       {:mvn/version "0.12.2"}
-  metosin/malli   {:mvn/version "0.2.0"}
-  integrant       {:mvn/version "0.8.0-alpha2"}
-  integrant/repl  {:mvn/version "0.3.1"}
-  duct/core       {:mvn/version "0.7.0"}}}
+  metosin/malli   {:mvn/version "0.2.0"}}}
