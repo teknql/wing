@@ -1,6 +1,7 @@
 # Wing
 A modular framework for clojure applications
 
+[![Build Status](https://img.shields.io/github/workflow/status/teknql/wing/CI.svg)](https://github.com/teknql/wing/actions)
 [![Clojars Project](https://img.shields.io/clojars/v/wing/wing.svg)](https://clojars.org/wing/wing)
 [![cljdoc badge](https://cljdoc.org/badge/wing/wing)](https://cljdoc.org/d/wing/wing/CURRENT)
 
