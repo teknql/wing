@@ -1,7 +1,7 @@
 (ns wing.malli.json-test
   (:require [wing.malli.json :as sut]
             #?(:clj [clojure.test :as t :refer [deftest testing is]]
-               :cljs [cljs.test :as t :include-macros true])
+               :cljs [cljs.test :as t :refer [deftest testing is] :include-macros true])
             [malli.core :as m]
             [malli.generator :as mg]
             [cuerdas.core :as str]

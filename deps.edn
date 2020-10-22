@@ -44,7 +44,7 @@
  :deps
  {org.clojure/tools.deps.alpha {:mvn/version "0.8.677"}
   clj-commons/pomegranate      {:mvn/version "1.2.0"}
-  org.clojure/core.match       {:mvn/version "0.3.0"}
+  org.clojure/core.match       {:mvn/version "1.0.0"}
 
   funcool/cuerdas     {:mvn/version "2.2.0"}
   tick/tick           {:mvn/version "0.4.23-alpha"}
