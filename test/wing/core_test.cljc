@@ -1,5 +1,5 @@
 (ns wing.core-test
-  (:require [wing.core :as sut :refer [fex]]
+  (:require [wing.core :as sut :refer [fex] :include-macros true]
             [clojure.test :refer [deftest testing is are]]
             [clojure.test.check.generators :as gen]
             [clojure.test.check.properties :as prop]
