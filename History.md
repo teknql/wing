@@ -1,3 +1,8 @@
+0.1.4 / 2020-11-14
+==================
+
+  * feat: core/compr compose reducers
+  * fix: cljs support
 
 0.1.3 / 2020-10-20
 ==================
