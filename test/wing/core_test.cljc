@@ -484,3 +484,16 @@
 
 (deftest random-uuid-test
   (is (uuid? (sut/random-uuid))))
+
+(deftest compr-test
+  (testing "is just like comp for arity one fns"
+    (let [fns       [inc inc inc]
+          via-compr (sut/compr fns)
+          via-comp  (comp fns)]
+      (is (= (via-compr 1) (via-comp 1)))))
+  (testing "works with multi-arity fns"
+    (let [f (sut/compr
+              #(update %1 :sum + %2)
+              #(update %1 :product * %2))]
+      (is (= {:sum 10 :product 24}
+             (reduce f {:sum 0 :product 1} [1 2 3 4]))))))

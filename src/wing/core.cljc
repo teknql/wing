@@ -467,3 +467,16 @@
                                      (conj a)
                                      (conj b)))))]
     `(array-map ~@data)))
+
+(defn compr
+  "Composes the provided reducer functions `fs`.
+
+  This essentially behaves exactly as `comp` but is variadic where additional arguments will be
+  passed to each function."
+  [& fs]
+  (fn [acc & args]
+    (loop [[f & _ :as fs] fs
+           acc            acc]
+      (if-not (seq fs)
+        acc
+        (recur (rest fs) (apply f acc args))))))
