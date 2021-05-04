@@ -47,3 +47,31 @@
               "name"        "Samson"}
              encoded))
       (is (= val decoded)))))
+
+
+(deftest default-fn-transformer-test
+  (testing "calls :default-fn if the key is not present in the map"
+    (is (= {:foo 5}
+           (m/decode [:map [:foo {:default-fn (constantly 5)} int?]]
+                     {}
+                     (sut/default-fn-transformer))))))
+
+(deftest empty-string-as-nil-transformer-test
+  (testing "converts empty strings to nil"
+    (is (= {:foo nil}
+           (m/decode
+             [:map [:foo [:maybe :string]]]
+             {:foo ""}
+             (sut/empty-string-as-nil-transformer))))))
+
+(deftest strip-nil-keys-transformer-test
+  (testing "strips nil keys from the map"
+    (is (= {:foo 1
+            :bar 2}
+           (m/decode
+             [:map
+              [:foo int?]
+              [:bar int?]
+              [:baz {:optional true} int?]]
+             {:foo 1 :bar 2 :baz nil}
+             (sut/strip-nil-keys-transformer))))))
