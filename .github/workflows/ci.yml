@@ -25,9 +25,9 @@ jobs:
         with:
           java-version: 15
       - name: Setup Clojure
-        uses: DeLaGuardo/setup-clojure@2.0
+        uses: DeLaGuardo/setup-clojure@3.2
         with:
-          tools-deps: latest
+          cli: latest
       - name: Cache dependencies
         uses: actions/cache@v2
         env:
@@ -48,9 +48,9 @@ jobs:
         with:
           java-version: 15
       - name: Setup Clojure
-        uses: DeLaGuardo/setup-clojure@2.0
+        uses: DeLaGuardo/setup-clojure@3.2
         with:
-          tools-deps: latest
+          cli: latest
       - name: Setup Node.js
         uses: actions/setup-node@v2.1.2
         with:

@@ -13,12 +13,11 @@
 
   Automatically truncates to milliseconds."
   [time duration]
-  (let [t-millis (t/millis (t/between (t/epoch) (t/instant time)))
+  (let [t-millis (t/millis (t/between (t/epoch) (t/truncate (t/instant time) :millis)))
         d-millis (t/millis duration)
         diff     (mod t-millis d-millis)]
     (-> time
-        (t/- (t/new-duration diff :millis))
-        (t/truncate :millis))))
+        (t/- (t/new-duration diff :millis)))))
 
 
 (defn ensure-chronological
