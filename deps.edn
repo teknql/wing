@@ -1,27 +1,34 @@
 {:paths ["src"]
  :pablo/config
- {:group-id wing
+ {:group-id com.teknql
   :github   "teknql/wing"
   :projects
-  {core  {:desc   "Extensions to the clojure standard library"
-          :target :jar
-          :deps   [org.clojure/core.match
-                   tick/tick]}
-   malli {:desc   "Malli related functionality for Wing"
-          :target :jar
-          :deps   [metosin/malli
-                   funcool/cuerdas]}
-   repl  {:desc   "Repl functionality for Wing"
-          :target :jar
-          :deps   [org.clojure/tools.deps.alpha
-                   clj-commons/pomegranate]}
-   test  {:desc   "Testing utilities for Wing"
-          :target :jar
-          :deps   [slingshot/slingshot
-                   org.clojure/core.match]}
-   wing  {:desc       "Batteries included framework for building applications"
-          :target     :jar
-          :local-deps [test repl  malli core]}}}
+  {wing-core  {:desc   "Extensions to the clojure standard library"
+               :target :jar
+               :deps   [org.clojure/core.match
+                        tick/tick]}
+   wing-malli {:desc   "Malli related functionality for Wing"
+               :target :jar
+               :deps   [metosin/malli
+                        funcool/cuerdas]}
+   wing-repl  {:desc   "Repl functionality for Wing"
+               :target :jar
+               :deps   [org.clojure/tools.deps.alpha
+                        clj-commons/pomegranate]}
+   wing-test  {:desc   "Testing utilities for Wing"
+               :target :jar
+               :deps   [slingshot/slingshot
+                        org.clojure/core.match]}
+   wing-uix   {:desc   "Tools for building front-ends using UIX"
+               :target :jar
+               :deps   [uix/uix.core
+                        uix/uix.dom
+                        metosin/malli
+                        metosin/reitit
+                        metosin/reitit-frontend]}
+   wing       {:desc       "Batteries included framework for building applications"
+               :target     :jar
+               :local-deps [test repl malli core]}}}
  :aliases
  {:dev
   {:extra-paths ["test"]
@@ -46,7 +53,16 @@
   clj-commons/pomegranate      {:mvn/version "1.2.0"}
   org.clojure/core.match       {:mvn/version "1.0.0"}
 
-  funcool/cuerdas     {:mvn/version "2021.05.02-0"}
+  funcool/cuerdas     {:mvn/version "2021.05.09-0"}
   tick/tick           {:mvn/version "0.4.31-alpha"}
   slingshot/slingshot {:mvn/version "0.12.2"}
-  metosin/malli       {:mvn/version "0.5.1"}}}
+  metosin/malli       {:mvn/version "0.5.1"}
+
+  uix/uix.core            {:git/url   "https://github.com/teknql/uix.git"
+                           :deps/root "core"
+                           :sha       "6acd96e91a6d8df042cef89150080c32d2eed97a"}
+  uix/uix.dom             {:git/url   "https://github.com/teknql/uix.git"
+                           :deps/root "dom"
+                           :sha       "6acd96e91a6d8df042cef89150080c32d2eed97a"}
+  metosin/reitit          {:mvn/version "0.5.13"}
+  metosin/reitit-frontend {:mvn/version "0.5.13"}}}
