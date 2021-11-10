@@ -480,3 +480,18 @@
       (if-not (seq fs)
         acc
         (recur (rest fs) (apply f acc args))))))
+
+(defn toggle
+  "Return a set of items `s` with the presence of `val` toggled."
+  [s val]
+  ((if (contains? s val)
+     disj
+     conj) s val))
+
+(comment
+  (toggle #{:a :b} :c)
+  (toggle #{:a :b} :b)
+
+  (update {:k #{:a :b}} :k toggle :c)
+  (update {:k #{:a :b}} :k toggle :b)
+  )
