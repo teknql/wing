@@ -14,34 +14,35 @@
 
 (defn router-provider
   "Build a reitit powered router-provider using the provided routes and malli registry extensions."
-  [{:keys [routes registry-extensions]} comp]
-  (let [router     (rf/router
-                     routes
-                     {:data {:coercion
-                             (-> r.malli/default-options
-                                 (assoc-in [:options :registry]
-                                           (merge (m/default-schemas)
-                                                  registry-extensions))
-                                 (assoc-in [:transformers :string :default]
-                                           (mt/transformer
-                                             (mt/string-transformer)
-                                             (wm/default-fn-transformer)
-                                             (wm/empty-string-as-nil-transformer)
-                                             (wm/strip-nil-keys-transformer)))
-                                 (r.malli/create))}})
-        history    (uix/state nil)
-        match      (uix/state nil)]
-    (uix/with-effect []
-      (let [history-val (rfh/start! router #(reset! match %) {:use-fragment false})]
-        (reset! history history-val)
-        #(do (rfh/stop! history-val)
-             (reset! history nil))))
-    (uix/context-provider
-      [*router* router]
-      (uix/context-provider
-        [*match* @match]
-        (uix/context-provider [*history* @history]
-                              [comp])))))
+  ([opts comp] (router-provider opts comp {}))
+  ([{:keys [routes registry-extensions]} comp comp-opts]
+   (let [router  (rf/router
+                   routes
+                   {:data {:coercion
+                           (-> r.malli/default-options
+                               (assoc-in [:options :registry]
+                                         (merge (m/default-schemas)
+                                                registry-extensions))
+                               (assoc-in [:transformers :string :default]
+                                         (mt/transformer
+                                           (mt/string-transformer)
+                                           (wm/default-fn-transformer)
+                                           (wm/empty-string-as-nil-transformer)
+                                           (wm/strip-nil-keys-transformer)))
+                               (r.malli/create))}})
+         history (uix/state nil)
+         match   (uix/state nil)]
+     (uix/with-effect []
+       (let [history-val (rfh/start! router #(reset! match %) {:use-fragment false})]
+         (reset! history history-val)
+         #(do (rfh/stop! history-val)
+              (reset! history nil))))
+     (uix/context-provider
+       [*router* router]
+       (uix/context-provider
+         [*match* @match]
+         (uix/context-provider [*history* @history]
+                               [comp comp-opts]))))))
 
 (defn use-match
   "Return the value of the active match"
