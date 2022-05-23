@@ -1,7 +1,7 @@
 (ns wing.core.time-test
   (:require [wing.core.time :as sut]
             [clojure.test :refer [deftest testing is]]
-            [tick.alpha.api :as t]))
+            [tick.core :as t]))
 
 
 (deftest divisible?-test

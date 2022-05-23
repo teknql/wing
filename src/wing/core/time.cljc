@@ -1,6 +1,6 @@
 (ns wing.core.time
   "Utilities for working with time"
-  (:require [tick.alpha.api :as t]
+  (:require [tick.core :as t]
             [wing.core :as w]))
 
 (defn divisible?
@@ -17,7 +17,7 @@
         d-millis (t/millis duration)
         diff     (mod t-millis d-millis)]
     (-> time
-        (t/- (t/new-duration diff :millis)))))
+        (t/<< (t/new-duration diff :millis)))))
 
 
 (defn ensure-chronological

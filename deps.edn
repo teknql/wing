@@ -55,19 +55,19 @@
     olical/cljs-test-runner     {:mvn/version "3.7.0"}
     org.clojure/test.check      {:mvn/version "0.10.0"}}}}
  :deps
- {org.clojure/tools.deps.alpha {:mvn/version "0.8.677"}
-  clj-commons/pomegranate      {:mvn/version "1.2.0"}
+ {org.clojure/tools.deps.alpha {:mvn/version "0.14.1178"}
+  clj-commons/pomegranate      {:mvn/version "1.2.1"}
   org.clojure/core.match       {:mvn/version "1.0.0"}
 
-  funcool/cuerdas     {:mvn/version "2021.05.09-0"}
-  tick/tick           {:mvn/version "0.4.31-alpha"}
+  funcool/cuerdas     {:mvn/version "2022.03.27-397"}
+  tick/tick           {:mvn/version "0.5.0-RC5"}
   slingshot/slingshot {:mvn/version "0.12.2"}
-  metosin/malli       {:mvn/version "0.5.1"}
+  metosin/malli       {:mvn/version "0.8.4"}
 
-  com.taoensso/timbre       {:mvn/version "5.0.0"}
-  com.fzakaria/slf4j-timbre {:mvn/version "0.3.19"}
+  com.taoensso/timbre       {:mvn/version "5.2.1"}
+  com.fzakaria/slf4j-timbre {:mvn/version "0.3.21"}
   raven-clj/raven-clj       {:mvn/version "1.6.0"}
-  mvxcvi/puget              {:mvn/version "1.3.1"}
+  mvxcvi/puget              {:mvn/version "1.3.2"}
 
   uix/uix.core            {:git/url   "https://github.com/teknql/uix.git"
                            :deps/root "core"
@@ -75,5 +75,5 @@
   uix/uix.dom             {:git/url   "https://github.com/teknql/uix.git"
                            :deps/root "dom"
                            :sha       "e208ad678203e7678f073488882e13e8c42b17af"}
-  metosin/reitit          {:mvn/version "0.5.13"}
-  metosin/reitit-frontend {:mvn/version "0.5.13"}}}
+  metosin/reitit          {:mvn/version "0.5.18"}
+  metosin/reitit-frontend {:mvn/version "0.5.18"}}}
