@@ -2,7 +2,7 @@
   "Namespace providing extensions to clojure's standard library"
   (:require [clojure.core :as core]
             [wing.core.walk :as w.walk])
-  (:refer-clojure :exclude [rand group-by #?(:cljs random-uuid)]))
+  (:refer-clojure :exclude [rand group-by random-uuid]))
 
 (defn- deep-merge*
   "Recursive helper function for deep-merge. Keeps the right-most value
@@ -13,10 +13,13 @@
     b))
 
 (defn random-uuid
-  "Return a random-uuid. Cljc port of the clojurescript variant"
+  "Return a random-uuid. Cljc port of the clojurescript variant
+
+  Now deprecated. Use `clojure.core/random-uuid` instead."
+  {:deprecated true}
   []
   #?(:cljs (clojure.core/random-uuid)
-     :clj (java.util.UUID/randomUUID)))
+     :clj (clojure.core/random-uuid)))
 
 (defn deep-merge
   "Similar to merge, but nested maps will be merged.
