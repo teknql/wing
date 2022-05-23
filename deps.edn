@@ -71,9 +71,9 @@
 
   uix/uix.core            {:git/url   "https://github.com/teknql/uix.git"
                            :deps/root "core"
-                           :sha       "6acd96e91a6d8df042cef89150080c32d2eed97a"}
+                           :sha       "e208ad678203e7678f073488882e13e8c42b17af"}
   uix/uix.dom             {:git/url   "https://github.com/teknql/uix.git"
                            :deps/root "dom"
-                           :sha       "6acd96e91a6d8df042cef89150080c32d2eed97a"}
+                           :sha       "e208ad678203e7678f073488882e13e8c42b17af"}
   metosin/reitit          {:mvn/version "0.5.13"}
   metosin/reitit-frontend {:mvn/version "0.5.13"}}}
