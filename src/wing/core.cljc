@@ -68,6 +68,18 @@
   (into m (for [[k v] (select-keys m (keys kfns)) :when (some? v)]
             [k ((kfns k) v)])))
 
+(defn binary-partition
+  "Return a tuple of `coll` with the first element being for which `pred` returned
+  truthy, and the second element being those which returned a falsey value."
+  [pred coll]
+  (loop [coll coll
+         trues nil
+         falses nil]
+    (cond
+      (empty? coll)       [(reverse trues) (reverse falses)]
+      (pred (first coll)) (recur (rest coll) (conj trues (first coll)) falses)
+      :else               (recur (rest coll) trues (conj falses (first coll))))))
+
 
 (defn partition-keys
   "Similar to `clojure.core/select-keys` but returns a vector of two maps. The first is

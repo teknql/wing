@@ -127,6 +127,10 @@
       (= m (second (sut/partition-keys m [])))))
 
 
+(deftest binary-partition-test
+  (is (= [[1 3 5] [2 4 6]]
+         (sut/binary-partition odd? [1 2 3 4 5 6]))))
+
 (deftest extract-test
   (is (= [[42 200] {:name "Bob"}]
          (sut/extract {:name "Bob" :weight 200 :age 42}
