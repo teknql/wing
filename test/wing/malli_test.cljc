@@ -58,10 +58,15 @@
 
 (deftest empty-string-as-nil-transformer-test
   (testing "converts empty strings to nil"
-    (is (= {:foo nil}
+    (is (= {:foo nil :bar nil :baz nil}
            (m/decode
-             [:map [:foo [:maybe :string]]]
-             {:foo ""}
+             [:map
+              [:foo [:maybe :string]]
+              [:bar int?]
+              [:baz pos-int?]]
+             {:foo ""
+              :bar ""
+              :baz ""}
              (sut/empty-string-as-nil-transformer))))))
 
 (deftest strip-nil-keys-transformer-test

@@ -68,8 +68,11 @@
                              %)]
     (mt/transformer
       {:name     :empty-string-as-nil
-       :decoders {'string? empty-string->nil
-                  :string  empty-string->nil}})))
+       :decoders
+       (into {'string? empty-string->nil
+               :string  empty-string->nil}
+             (for [k (keys (mt/-string-decoders))]
+               [k empty-string->nil]))})))
 
 (defn strip-nil-keys-transformer
   "Mall transformer that will remove `nil` value keys from a map on decode."
