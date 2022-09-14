@@ -79,7 +79,7 @@
      :decoders {:map {:leave #(if (map? %)
                                 (reduce-kv
                                   (fn [acc k v]
-                                    (if v
+                                    (if (some? v)
                                       (assoc acc k v)
                                       acc))
                                   {}

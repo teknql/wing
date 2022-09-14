@@ -72,6 +72,17 @@
              [:map
               [:foo int?]
               [:bar int?]
-              [:baz {:optional true} int?]]
+              [:baz {:optional true} boolean?]]
              {:foo 1 :bar 2 :baz nil}
+             (sut/strip-nil-keys-transformer)))))
+  (testing "allows falsey values into the map"
+    (is (= {:foo 1
+            :bar 2
+            :baz false}
+           (m/decode
+             [:map
+              [:foo int?]
+              [:bar int?]
+              [:baz {:optional true} boolean?]]
+             {:foo 1 :bar 2 :baz false}
              (sut/strip-nil-keys-transformer))))))
