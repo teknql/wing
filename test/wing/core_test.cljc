@@ -262,7 +262,12 @@
                               1 :b
                               2 :c}))))
   (testing "nil punning"
-    (is (nil? (sut/map-keys inc nil)))))
+    (is (nil? (sut/map-keys inc nil))))
+
+  (testing "meta data preservation"
+    (is (= {:meta true}
+           (meta
+             (sut/map-keys str (with-meta {:foo 5} {:meta true})))))))
 
 (deftest map-vals-test
   (testing "maps f over all values"
@@ -274,7 +279,12 @@
                               :c 2}))))
 
   (testing "nil punning"
-    (is (nil? (sut/map-vals inc nil)))))
+    (is (nil? (sut/map-vals inc nil))))
+
+  (testing "meta data preservation"
+    (is (= {:meta true}
+           (meta
+             (sut/map-vals inc (with-meta {:foo 5} {:meta true})))))))
 
 (deftest map-leaves-test
   (testing "maps f over all leaves"
@@ -286,7 +296,12 @@
                                 :c {:a 0}}))))
 
   (testing "nil punning"
-    (is (nil? (sut/map-leaves inc nil)))))
+    (is (nil? (sut/map-leaves inc nil))))
+
+  (testing "meta data preservation"
+    (is (= {:meta true}
+           (meta
+             (sut/map-leaves inc (with-meta {:foo 5} {:meta true})))))))
 
 (deftest remove-vals-test
   (testing "removes all values for which f returns true"
@@ -297,7 +312,12 @@
                                   :c 2}))))
 
   (testing "nil punning"
-    (is (nil? (sut/remove-vals nil? nil)))))
+    (is (nil? (sut/remove-vals nil? nil))))
+
+  (testing "meta data preservation"
+    (is (= {:meta true}
+           (meta
+             (sut/remove-vals pos? (with-meta {:foo 5} {:meta true})))))))
 
 (deftest filter-val-test
   (testing "removes all values for which f returns false"
@@ -308,7 +328,12 @@
                                    :c 2}))))
 
   (testing "nil punning"
-    (is (nil? (sut/filter-vals nil? nil)))))
+    (is (nil? (sut/filter-vals nil? nil))))
+
+  (testing "meta data preservation"
+    (is (= {:meta true}
+           (meta
+             (sut/filter-vals pos? (with-meta {:foo 5} {:meta true})))))))
 
 (deftest remove-keys-test
   (testing "removes all values for which f returns true"
@@ -319,7 +344,12 @@
                                    :c 2}))))
 
   (testing "nil punning"
-    (is (nil? (sut/remove-keys nil? nil)))))
+    (is (nil? (sut/remove-keys nil? nil))))
+
+  (testing "meta data preservation"
+    (is (= {:meta true}
+           (meta
+             (sut/remove-keys string? (with-meta {:foo 5} {:meta true})))))))
 
 (deftest filter-keys-test
   (testing "removes all values for which f returns false"
@@ -330,7 +360,12 @@
                                       :c 2}))))
 
   (testing "nil punning"
-    (is (nil? (sut/filter-keys nil? nil)))))
+    (is (nil? (sut/filter-keys nil? nil))))
+
+  (testing "meta data preservation"
+    (is (= {:meta true}
+           (meta
+             (sut/filter-keys string? (with-meta {:foo 5} {:meta true})))))))
 
 
 (deftest ns-keys-test
@@ -342,7 +377,12 @@
                          :bar "B"}))))
 
   (testing "nil punning"
-    (is (nil? (sut/ns-keys "foo" nil)))))
+    (is (nil? (sut/ns-keys "foo" nil))))
+
+  (testing "meta data preservation"
+    (is (= {:meta true}
+           (meta
+             (sut/ns-keys "foo" (with-meta {:foo 5} {:meta true})))))))
 
 
 (deftest assoc-some

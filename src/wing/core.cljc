@@ -299,26 +299,32 @@
 (defn map-keys
   "Returns a transducer for mapping `f` over all keys in a map-entry.
 
-  If called with `map`, returns a new map with `f` applied over all keys."
+  If called with `map`, returns a new map with `f` applied over all keys.
+
+  Deprecated: Use `clojure.core/update-keys` instead."
+  {:deprecated true}
   ([f] (core/map (fn [[k v]] [(f k) v])))
-  ([f map] (when map (into {} (map-keys f) map))))
+  ([f map] (when map (into (with-meta {} (meta map)) (map-keys f) map))))
 
 (defn map-vals
   "Returns a transducer for mapping `f` over all values in a map-entry.
 
-  If called with `map`, returns a new map with `f` applied over all values."
+  If called with `map`, returns a new map with `f` applied over all values.
+
+  Deprecated: Use `clojure.core/update-vals` instead."
+  {:deprecated true}
   ([f] (core/map (fn [[k v]] [k (f v)])))
-  ([f map] (when map (into {} (map-vals f) map))))
+  ([f map] (when map (into (with-meta {} (meta map)) (map-vals f) map))))
 
 (defn map-leaves
   "Returns a transducer for mapping `f` over all leaf values in a map-entry. Nested maps will be
   traversed.
 
-  If called with `map` returns a new map with `f` applied over all leaves. "
+  If called with `map` returns a new map with `f` applied over all leaves."
   ([f] (core/map (fn [[k v]] [k (if (map? v)
                                   (map-leaves f v)
                                   (f v))])))
-  ([f map] (when map (into {} (map-leaves f) map))))
+  ([f map] (when map (into (with-meta {} (meta map)) (map-leaves f) map))))
 
 (defn remove-vals
   "Return a transducer which will only match map-entries for which the
@@ -326,7 +332,7 @@
 
   If called with `map`, will return a new map executing the transducer."
   ([f] (remove (fn [[_ v]] (f v))))
-  ([f map] (when map (into {} (remove-vals f) map))))
+  ([f map] (when map (into (with-meta {} (meta map)) (remove-vals f) map))))
 
 (defn filter-vals
   "Return a transducer which will only match map-entries for which the
@@ -334,7 +340,7 @@
 
   If called with `map`, will return a new map executing the transducer."
   ([f] (filter (fn [[_ v]] (f v))))
-  ([f map] (when map (into {} (filter-vals f) map))))
+  ([f map] (when map (into (with-meta {} (meta map)) (filter-vals f) map))))
 
 (defn remove-keys
   "Return a transducer which will only match map-entries for which the
@@ -342,7 +348,7 @@
 
   If called with `map`, will return a new map executing the transducer."
   ([f] (remove (fn [[k _]] (f k))))
-  ([f map] (when map (into {} (remove-keys f) map))))
+  ([f map] (when map (into (with-meta {} (meta map)) (remove-keys f) map))))
 
 (defn filter-keys
   "Return a transducer which will only match map-entries for which the
@@ -350,14 +356,14 @@
 
   If called with `map`, will return a new map executing the transducer."
   ([f] (filter (fn [[k _]] (f k))))
-  ([f map] (when map (into {} (filter-keys f) map))))
+  ([f map] (when map (into (with-meta {} (meta map)) (filter-keys f) map))))
 
 (defn ns-keys
   "Returns a transducer which will namespace all keys in a map.
 
   If called with `map` returns a new map executing the transducer."
   ([ns] (map-keys (comp (partial keyword ns) name)))
-  ([ns map] (when map (into {} (ns-keys ns) map))))
+  ([ns map] (map-keys (comp (partial keyword ns) name) map)))
 
 (defn assoc-some
   "Like `clojure.core/assoc` but only associates the key and value if the `val` is `some?`."
@@ -441,7 +447,8 @@
 
   If `f` returns `nil` the sequence will terminate.
 
-  See also: `iterate`"
+  Deprecated. Use either `clojure.core/iterate` or `clojure.core/iteration`"
+  {:deprecated true}
   [f initial]
   (when-let [[val new-state] (f initial)]
     (lazy-seq
