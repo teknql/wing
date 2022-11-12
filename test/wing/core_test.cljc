@@ -376,6 +376,12 @@
                         {:foo "A"
                          :bar "B"}))))
 
+  (testing "removes a namespace with `nil` as the namespace"
+    (is (= {:foo "A" :bar "B" :baz "C"}
+           (sut/ns-keys nil {:test/foo "A"
+                             :other-test/bar "B"
+                             :baz "C"}))))
+
   (testing "nil punning"
     (is (nil? (sut/ns-keys "foo" nil))))
 
