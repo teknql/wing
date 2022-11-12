@@ -299,20 +299,14 @@
 (defn map-keys
   "Returns a transducer for mapping `f` over all keys in a map-entry.
 
-  If called with `map`, returns a new map with `f` applied over all keys.
-
-  Deprecated: Use `clojure.core/update-keys` instead."
-  {:deprecated true}
+  If called with `map`, returns a new map with `f` applied over all keys."
   ([f] (core/map (fn [[k v]] [(f k) v])))
   ([f map] (when map (into (with-meta {} (meta map)) (map-keys f) map))))
 
 (defn map-vals
   "Returns a transducer for mapping `f` over all values in a map-entry.
 
-  If called with `map`, returns a new map with `f` applied over all values.
-
-  Deprecated: Use `clojure.core/update-vals` instead."
-  {:deprecated true}
+  If called with `map`, returns a new map with `f` applied over all values."
   ([f] (core/map (fn [[k v]] [k (f v)])))
   ([f map] (when map (into (with-meta {} (meta map)) (map-vals f) map))))
 
