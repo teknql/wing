@@ -70,11 +70,14 @@
   "Returns a raven-clj Sentry appender.
   Requires the DSN (e.g. \"https://<key>:<secret>@sentry.io/<project>\")
   to be passed in, see Sentry documentation for details.
+
+  If an event's data has `:sentry/ignore` it will not be sent.
+
   Common options:
     * :tags, :environment, :release, and :modules will be passed to Sentry
       as attributes, Ref. https://docs.sentry.io/clientdev/attributes/.
     * :event-fn can be used to modify the raw event before sending it
-      to Sentry."
+      to Sentry. If returns `nil` no event will be sent at all."
 
   [dsn & [opts]]
   (let [{:keys [event-fn] :or {event-fn identity}} opts
@@ -106,4 +109,6 @@
 
                (event-fn event))]
 
-         (raven/capture dsn event)))}))
+         (when (and event
+                    (not (get-in event [:extra :sentry/ignore])))
+           (raven/capture dsn event))))}))
