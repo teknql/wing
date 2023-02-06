@@ -547,3 +547,7 @@
               #(update %1 :product * %2))]
       (is (= {:sum 10 :product 24}
              (reduce f {:sum 0 :product 1} [1 2 3 4]))))))
+
+(deftest over-test
+  (is (= (+ 2 3 4 5)
+         ((sut/over + inc) 1 2 3 4))))

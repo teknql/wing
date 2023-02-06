@@ -497,6 +497,12 @@
         acc
         (recur (rest fs) (apply f acc args))))))
 
+(defn over
+  "Returns a function which is `g` mapped over its variadic input and applied to `f`"
+  [f g]
+  (fn [& args]
+    (apply f (map g args))))
+
 (defn toggle
   "Return a set of items `s` with the presence of `val` toggled."
   [s val]
