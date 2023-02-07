@@ -175,6 +175,11 @@
   (testing "applies extract if provided"
     (is (= 3 (sut/find-first even? inc [1 2 4])))))
 
+(deftest find-ix-test
+  (testing "returns the index"
+    (is (= 0 (sut/find-first-ix even? [2 3])))
+    (is (= nil (sut/find-first-ix #{5} [2 3])))))
+
 (deftest indistinct-test
   (let [input [1 2 3 4 5 6 1 2 3 7 8 9]]
     (testing "works over a collection"

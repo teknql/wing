@@ -146,6 +146,13 @@
    (when-some [item (first (filter pred coll))]
      (extract item))))
 
+(defn find-first-ix
+  "Return the index of the first item matching `pred` in `coll`"
+  [pred coll]
+  (->> coll
+       (map-indexed vector)
+       (find-first (comp pred second) first)))
+
 (defn indistinct
   "Returns elements in a sequence that appear more than once.
 
