@@ -463,7 +463,9 @@
   Useful for coercing polyvariadic functions into fixed arity ones.
 
   Optionally takes `&args` which will be applied after the first `n`
-  arguments."
+  arguments.
+
+  For getting the arity of a function, see `fn-arity`"
   {:arglists '([n f & static-args])}
   [n f & static-args]
   (fn [& call-args]
@@ -516,6 +518,29 @@
   ((if (contains? s val)
      disj
      conj) s val))
+
+#?(:clj
+   (defn fn-arities
+     "Return a set of all arities defined for `f`.
+
+  A variadic function will return a set of `#{0 1}`"
+     [f]
+     (->> f
+          class
+          (.getDeclaredMethods)
+          (map #(-> % .getParameterTypes alength))
+          (set))))
+
+#?(:clj
+   (defn fn-arity
+     "Function to get the arity of the provided function `f`
+
+  For functions that have multiple arities defined, returns the highest defined
+  arity.
+
+  For the function combinator see `arity`"
+     [f]
+     (apply max (fn-arities f))))
 
 (comment
   (toggle #{:a :b} :c)

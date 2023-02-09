@@ -556,3 +556,15 @@
 (deftest over-test
   (is (= (+ 2 3 4 5)
          ((sut/over + inc) 1 2 3 4))))
+
+#?(:clj
+   (deftest fn-arities-test
+     (is (= #{0 1} (sut/fn-arities (constantly nil))))
+     (is (= #{0} (sut/fn-arities (fn [] 1))))
+     (is (= #{1} (sut/fn-arities (fn [_] 1))))
+     (is (= #{1 2} (sut/fn-arities (fn ([_] 1) ([_ _] 2)))))))
+
+#?(:clj
+   (deftest fn-arity-test
+     (is (= 1 (sut/fn-arity (constantly nil))))
+     (is (= 0 (sut/fn-arity (fn [] 1))))))
