@@ -542,6 +542,33 @@
      [f]
      (apply max (fn-arities f))))
 
+(defn sliding
+  "A stateful transducer variant of `partition`."
+  ([^long n] (sliding n 1))
+  ([^long n ^long step]
+   (fn [rf]
+     (let [a #?(:clj (java.util.ArrayDeque. n)
+                :cljs (js/Array.))]
+       (fn
+         ([] (rf))
+         ([result]
+            (let [result (if (= 0 #?(:clj (.size a) :cljs (.-length a)))
+                           result
+                           (let [v #?(:clj (vec (.toArray a))
+                                      :cljs (js->clj a))]
+                             #?(:clj (.clear a) :cljs (set! (.-length a) 0))
+                             (unreduced (rf result v))))]
+              (rf result)))
+         ([result input]
+          #?(:clj (.add a input) :cljs (.push a input))
+          (if (= n #?(:clj (.size a) :cljs (.-length a)))
+            (let [v #?(:clj (vec (.toArray a))
+                       :cljs (js->clj a))]
+              (dotimes [_ step]
+                (#?(:clj .removeFirst :cljs .shift) a))
+              (rf result v))
+            result)))))))
+
 (comment
   (toggle #{:a :b} :c)
   (toggle #{:a :b} :b)

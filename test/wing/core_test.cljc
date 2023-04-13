@@ -568,3 +568,13 @@
    (deftest fn-arity-test
      (is (= 1 (sut/fn-arity (constantly nil))))
      (is (= 0 (sut/fn-arity (fn [] 1))))))
+
+(defspec sliding-behaves-like-partition
+  5
+  (prop/for-all [[step size] (gen/such-that
+                               #(apply <= 1 %)
+                               (gen/tuple gen/nat gen/nat)
+                               1000)
+                 coll (gen/vector gen/small-integer 1 50)]
+      (is (= (partition size step nil coll)
+             (sequence (sut/sliding size step) coll)))))
