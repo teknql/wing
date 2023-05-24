@@ -106,7 +106,9 @@
                (if ?err
                  (interfaces/stacktrace event ?err)
                  event)
-
+               (if ?err
+                 (update event :extra merge (ex-data ?err))
+                 event)
                (event-fn event))]
 
          (when (and event
