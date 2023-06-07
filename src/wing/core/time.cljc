@@ -13,7 +13,8 @@
 
   Automatically truncates to milliseconds."
   [time duration]
-  (let [t-millis (t/millis (t/between (t/epoch) (t/truncate (t/instant time) :millis)))
+  (let [time     (t/truncate time :millis)
+        t-millis (t/millis (t/between (t/epoch) (t/instant time)))
         d-millis (t/millis duration)
         diff     (mod t-millis d-millis)]
     (-> time
