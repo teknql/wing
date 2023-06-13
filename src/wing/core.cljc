@@ -246,15 +246,16 @@
   See also `dedupe-by`."
   ([f]
    (fn [rf]
-     (let [seen (transient #{})]
+     (let [seen* (volatile! (transient #{}))]
        (fn
          ([] (rf))
          ([acc] (rf acc))
          ([acc x]
           (let [sig (f x)]
-            (when-not (contains? seen sig)
-              (conj! seen sig)
-              (rf acc x))))))))
+            (if-not (contains? @seen* sig)
+              (do (vswap! seen* conj! sig)
+                  (rf acc x))
+              acc)))))))
   ([f coll]
    (sequence (distinct-by f) coll)))
 
