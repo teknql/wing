@@ -4,7 +4,8 @@
             [puget.printer :as puget]
             [puget.color.ansi :as ansi]
             [raven-clj.core :as raven]
-            [raven-clj.interfaces :as interfaces]))
+            [raven-clj.interfaces :as interfaces]
+            [cuerdas.core :as str]))
 
 (def ^:private ^:const system-newline
   (System/getProperty "line.separator"))
@@ -42,9 +43,12 @@
                                            msg)]
                     (str header
                          (when (or data context)
-                           (str " "
-                                (puget/with-color
-                                  (puget/pprint-str (merge data context)))))
+                           (str "\n"
+                                (->> (puget/with-color
+                                       (puget/pprint-str (merge data context) {:map-delimiter ""}))
+                                     (str/lines)
+                                     (map #(str "  " %))
+                                     (str/join "\n"))))
                          (when ?err
                            (str "\n"
                                 (log/stacktrace ?err))))))
