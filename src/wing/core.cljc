@@ -126,9 +126,10 @@
   "Rounds `n` to the given `precision`"
   ([n] (round n 0))
   ([n precision]
-   (let [factor (Math/pow 10 precision)]
-     (/ (Math/round (* n factor))
-        factor))))
+   (when n
+     (let [factor (Math/pow 10 precision)]
+       (/ (Math/round (* n factor))
+          factor)))))
 
 
 (defn find-first
