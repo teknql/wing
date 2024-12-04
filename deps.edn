@@ -39,30 +39,30 @@
  {:dev
   {:extra-paths ["test"]
    :extra-deps
-   {org.clojure/test.check {:mvn/version "0.10.0"}}}
+   {org.clojure/test.check {:mvn/version "1.1.1"}}}
   :test
   {:extra-paths ["test"]
    :main-opts   ["-m" "kaocha.runner"]
    :extra-deps
-   {org.clojure/test.check {:mvn/version "0.10.0"}
-    lambdaisland/kaocha    {:mvn/version "0.0-541"}}}
+   {org.clojure/test.check {:mvn/version "1.1.1"}
+    lambdaisland/kaocha    {:mvn/version "1.68.1059"}}}
   :test-cljs
   {:extra-paths ["test"]
    :main-opts   ["-m" "cljs-test-runner.main" "-o" ".cljs-test-runner-out"]
    :extra-deps
-   {org.clojure/clojurescript   {:mvn/version "1.10.520"}
+   {org.clojure/clojurescript   {:mvn/version "1.11.60"}
     com.andrewmcveigh/cljs-time {:mvn/version "0.5.2"}
-    olical/cljs-test-runner     {:mvn/version "3.7.0"}
-    org.clojure/test.check      {:mvn/version "0.10.0"}}}}
+    olical/cljs-test-runner     {:mvn/version "3.8.0"}
+    org.clojure/test.check      {:mvn/version "1.1.1"}}}}
  :deps
- {org.clojure/tools.deps.alpha {:mvn/version "0.14.1178"}
+ {org.clojure/tools.deps.alpha {:mvn/version "0.14.1212"}
   clj-commons/pomegranate      {:mvn/version "1.2.1"}
   org.clojure/core.match       {:mvn/version "1.0.0"}
 
-  funcool/cuerdas     {:mvn/version "2022.03.27-397"}
-  tick/tick           {:mvn/version "0.5.0-RC5"}
+  funcool/cuerdas     {:mvn/version "2022.06.16-403"}
+  tick/tick           {:mvn/version "0.5.0-RC6"}
   slingshot/slingshot {:mvn/version "0.12.2"}
-  metosin/malli       {:mvn/version "0.8.4"}
+  metosin/malli       {:mvn/version "0.8.9"}
 
   com.taoensso/timbre       {:mvn/version "5.2.1"}
   com.fzakaria/slf4j-timbre {:mvn/version "0.3.21"}
