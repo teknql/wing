@@ -2,3 +2,7 @@
 .nrepl-port
 target/
 .cljs-test-runner-out/
+
+
+.clj-kondo/.cache
+.lsp
