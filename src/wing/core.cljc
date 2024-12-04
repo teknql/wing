@@ -441,24 +441,6 @@
            {}
            coll)))
 
-(defn unfold
-  "Produces a lazy sequence by invoking f with initial.
-
-  `f` should return a tuple of an item and new state.
-
-  If the item is `nil` nothing will be emitted.
-
-  If `f` returns `nil` the sequence will terminate.
-
-  Deprecated. Use either `clojure.core/iterate` or `clojure.core/iteration`"
-  {:deprecated true}
-  [f initial]
-  (when-let [[val new-state] (f initial)]
-    (lazy-seq
-      (if val
-        (cons val (unfold f new-state))
-        (unfold f new-state)))))
-
 (defn arity
   "Return a variant of `f` that will only accept `n` arguments.
 
