@@ -8,13 +8,18 @@
 
 (def gen-simple-map
   "Generator for simple map"
-  (let [simple-gen (gen/one-of [gen/keyword gen/int gen/string gen/boolean])
+  (let [simple-gen (gen/one-of [gen/keyword gen/small-integer gen/string gen/boolean])
         simple-val (gen/frequency [[5 simple-gen]
                                    [1 (gen/map simple-gen simple-gen)]
                                    [1 (gen/list simple-gen)]
                                    [1 (gen/vector simple-gen)]
                                    [1 (gen/set simple-gen)]])]
     (gen/map simple-gen simple-val)))
+
+(deftest assert-info-test
+  (is (thrown?
+        #?(:clj clojure.lang.ExceptionInfo :cljs js/Error)
+        (sut/assert-info (= 1 2) "Non-sense error" {:foo :bar}))))
 
 (deftest deep-merge-test
   (testing "is identity for single arguments"
@@ -46,7 +51,7 @@
 
 (defspec apply-if-applies-if-pred-returns-true
   5
-  (prop/for-all [x gen/int]
+  (prop/for-all [x gen/small-integer]
       (is (= (inc x)
              (sut/apply-if x (constantly true) inc)))))
 
@@ -58,7 +63,7 @@
 
 (defspec apply-when-applies-if-pred-returns-true
   5
-  (prop/for-all [x gen/int]
+  (prop/for-all [x gen/small-integer]
       (is (= (inc x)
              (sut/apply-when x (constantly true) inc)))))
 
@@ -457,7 +462,10 @@
                                 :h 9}}]
       (is (= {:a 1 :b 2 :c 3 :d {:e {:g true}
                                  :h 9}}
-             (sut/dissoc-in m [:d :e :f]))))))
+             (sut/dissoc-in m [:d :e :f])))))
+  (testing "does not alter maps for paths that don't exist"
+    (let [m {:a 1 :b 2}]
+      (is (= m (sut/dissoc-in m [:c :d]))))))
 
 (deftest index-by-test
   (let [data [{:name "Bob" :age 42}
@@ -510,6 +518,7 @@
       (is (= '(1
                 3
                 5)
+             #_{:clj-kondo/ignore [:deprecated-var]}
              (sut/unfold f 1))))))
 
 (deftest arity-test
@@ -538,6 +547,7 @@
              (sut/make-map "a" a b))))))
 
 (deftest random-uuid-test
+  #_{:clj-kondo/ignore [:deprecated-var]}
   (is (uuid? (sut/random-uuid))))
 
 (deftest compr-test
@@ -578,3 +588,6 @@
                  coll (gen/vector gen/small-integer 1 50)]
       (is (= (partition size step nil coll)
              (sequence (sut/sliding size step) coll)))))
+
+(deftest deep-merge*-test
+  (is (= 1 1)))

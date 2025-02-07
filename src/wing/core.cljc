@@ -407,11 +407,12 @@
 (defn dissoc-in
   "Like `clojure.core/dissoc` but takes a path like `clojure.core/get-in`"
   [m path]
-  (let [path-count (count path)]
-    (if (= 1 path-count)
-      (dissoc m (first path))
-      (let [[update-tgt [dissoc-tgt]] (split-at (- path-count 1) path)]
-        (update-in m update-tgt dissoc dissoc-tgt)))))
+  (let [[k & ks] path]
+    (cond
+      (or (empty? path)
+          (not (contains? m k))) m
+      (empty? ks)                (dissoc m k)
+      :else                      (update m k dissoc-in ks))))
 
 (defn index-by
   "Indexes a `coll` by the value returned by `f`. Returns a map.
@@ -570,7 +571,6 @@
                 (#?(:clj .removeFirst :cljs .shift) a))
               (rf result v))
             result)))))))
-
 (comment
   (toggle #{:a :b} :c)
   (toggle #{:a :b} :b)
