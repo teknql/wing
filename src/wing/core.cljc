@@ -537,6 +537,26 @@
      disj
      conj) s val))
 
+(defn induct
+  "Apply `f` to `x` and associate it under key `k`.
+
+  Optionally takes functions `gs` which if provided will be mapped over as inputs to `f`.
+
+  Examples:
+
+  (induct {:name \"Bob\"} :letter-count (comp count :name))
+  ;; => {:name \"Bob\" :letter-count 3}
+
+  (induct {:name \"Bob\"} :letter-count count :name)
+  ;; => {:name \"Bob\" :letter-count 3}
+
+  (induct {:cat-count 3 :dog-count 4} :cat+dog-count + :cat-count :dog-count)
+  ;; => {:cat-count 3 :dog-count 4 :cat+dog-count 7}"
+  [x k f & gs]
+  (if-not (seq gs)
+    (assoc x k (f x))
+    (assoc x k (apply f (for [g gs] (g x))))))
+
 #?(:clj
    (defn fn-arities
      "Return a set of all arities defined for `f`.

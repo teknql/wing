@@ -590,6 +590,15 @@
      (is (= 1 (sut/fn-arity (constantly nil))))
      (is (= 0 (sut/fn-arity (fn [] 1))))))
 
+(deftest induct-test
+  (testing "with no mapping fns"
+    (is (= {:name "Bob" :letter-count 3}
+           (sut/induct {:name "Bob"} :letter-count (comp count :name)))))
+
+  (testing "with mapping fns"
+    (is (= {:cat-count 3 :dog-count 4 :cat+dog-count 7}
+           (sut/induct {:cat-count 3 :dog-count 4} :cat+dog-count + :cat-count :dog-count)))))
+
 (defspec sliding-behaves-like-partition
   5
   (prop/for-all [[step size] (gen/such-that
