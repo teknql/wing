@@ -166,6 +166,17 @@
     (is (= 3.94 (sut/round (sut/standard-deviation  4 9 11 12 17 5 8 12 14) 2)))))
 
 
+(deftest median-test
+  (testing "returns the median of the numbers"
+    (is 2 (sut/median 1 2 3)))
+
+  (testing "returns the avg of two numbers if the median is between"
+    (is 2.5 (sut/median 1 2 3 3)))
+
+  (testing "returns nil when called with empty args"
+    (is (nil? (sut/median)))))
+
+
 (deftest round-test
   (testing "obeys precision"
     (are [expected n precision] (= expected (sut/round n precision))
