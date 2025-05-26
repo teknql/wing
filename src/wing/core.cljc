@@ -115,6 +115,21 @@
   (when (seq args)
     (/ (apply sum args) (count args))))
 
+(defn median
+  "Variadic function which finds the median of `args`. Returns nil on empty collections."
+  [& args]
+  (let [n (count args)]
+    (if (even? n)
+      (->> args
+           sort
+           (drop (dec (quot n 2)))
+           (take 2)
+           (apply avg))
+      (->> args
+           sort
+           (drop (quot n 2))
+           first))))
+
 (defn standard-deviation
   "Varidic function wheich will return the standard deviation of the provided `args`. Returns `nil`
   on empty collections"
